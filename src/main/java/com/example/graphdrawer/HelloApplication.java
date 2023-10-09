@@ -77,6 +77,18 @@ public class HelloApplication extends Application  {
         double scaleX = data.getScaleX();
         double scaleY = data.getScaleY();
 
+        int[] xP = new int[1920];
+        int[] yP = new int[1920];
+
+        for(int x = 0; x < data.getG().getCanvas().getWidth(); x++) {
+            xP[x] = x;
+            yP[x] = data.getY() - (int)(data.getData().getRoot().calc((x - data.getX()) * scaleX) * scaleY);
+        }
+
+        for (int x = 0; x < data.getG().getCanvas().getWidth() - 1; x++) {
+            LineDrawer.WuLine(xP[x], yP[x], xP[x+1], yP[x+1], gc.getPixelWriter());
+        }
+        /*
         gc.beginPath();
         for (int x = 0; x < data.getG().getCanvas().getWidth(); x++) {
             double scaledX = (x - data.getX()) * scaleX;
@@ -86,14 +98,13 @@ public class HelloApplication extends Application  {
             gc.lineTo(x, y);
         }
         gc.stroke();
-
+        */
     }
     private void addMouseScrolling(Node node) {
         node.setOnScroll((ScrollEvent event) -> {
             expression.setScaleX(expression.getScaleX() + event.getDeltaX() / 100);
             expression.setScaleY(expression.getScaleY() + event.getDeltaY() / 100);
-            System.out.println(expression.getScaleX());
-            System.out.println(expression.getScaleY());
+
             drawGraphic(expression);
         });
     }
@@ -105,11 +116,8 @@ public class HelloApplication extends Application  {
         node.setOnMouseDragged(mouseEvent -> {
             expression.setX(expression.getX() - ((int)this.dragDeltaStartX - (int)mouseEvent.getX()) / 10);
             expression.setY(expression.getY() - ((int)this.dragDeltaStartY - (int)mouseEvent.getY()) / 10);
-            System.out.println(mouseEvent.getX());
-            System.out.println(mouseEvent.getSceneX());
-            System.out.println((int)mouseEvent.getX() - (int)mouseEvent.getSceneX());
-            drawGraphic(expression);
 
+            drawGraphic(expression);
         });
     }
     public static void main(String[] args) {

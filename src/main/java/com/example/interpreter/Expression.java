@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 public class Expression {
     private Node root;
-    private static final Pattern expressionPattern = Pattern.compile("[0-9]+|\\+|-|\\*|/|x|\\)|\\(|\\^|sin\\(.*?\\)|cos\\(.*?\\)"); //
+    private static final Pattern expressionPattern = Pattern.compile("[0-9]+\\.[0-9]+|[0-9]+|\\+|-|\\*|/|x|\\)|\\(|\\^|sin\\(.*?\\)|cos\\(.*?\\)"); //
     public Expression(String expression) {
         buildTree(expression);
     }
